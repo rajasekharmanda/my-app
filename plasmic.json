@@ -1,0 +1,77 @@
+{
+  "platform": "react",
+  "code": {
+    "lang": "js",
+    "scheme": "blackbox",
+    "reactRuntime": "classic"
+  },
+  "style": {
+    "scheme": "css-modules",
+    "defaultStyleCssFilePath": "plasmic/plasmic__default_style.css"
+  },
+  "images": {
+    "scheme": "files",
+    "publicDir": "../../public",
+    "publicUrlPrefix": "/static/"
+  },
+  "tokens": {
+    "scheme": "theo",
+    "tokensFilePath": "plasmic-tokens.theo.json"
+  },
+  "srcDir": "src/components",
+  "defaultPlasmicDir": "./plasmic",
+  "projects": [
+    {
+      "projectId": "hvBfzTDAC4iGBRYxRm6ucd",
+      "projectApiToken": "Y87ZSGaGs5ayv8pYbQtj0iaqooHhPPlWC0fF2WPEMNLwJCfoM1kAmUkX4VmlhDEO5Ua9Nbs4zZfQ0UZsEQkGA",
+      "projectName": "Test Project",
+      "version": "latest",
+      "cssFilePath": "plasmic/test_project/plasmic.module.css",
+      "components": [
+        {
+          "id": "dSugVBbc3z4l",
+          "name": "TestProject",
+          "type": "managed",
+          "projectId": "hvBfzTDAC4iGBRYxRm6ucd",
+          "renderModuleFilePath": "plasmic/test_project/PlasmicTestProject.jsx",
+          "importSpec": {
+            "modulePath": "TestProject.jsx"
+          },
+          "cssFilePath": "plasmic/test_project/PlasmicTestProject.module.css",
+          "scheme": "blackbox",
+          "componentType": "page",
+          "path": "/test-project"
+        }
+      ],
+      "icons": [],
+      "images": [],
+      "indirect": false,
+      "globalContextsFilePath": "",
+      "splitsProviderFilePath": "",
+      "styleTokensProviderFilePath": "",
+      "projectModuleFilePath": "",
+      "codeComponents": [
+        {
+          "id": "znEGxgbuiKEH",
+          "name": "PlasmicHead",
+          "displayName": "hostless-plasmic-head",
+          "componentImportPath": "@plasmicapp/react-web"
+        },
+        {
+          "id": "XpLb9LjXom_j",
+          "name": "Fetcher",
+          "displayName": "plasmic-data-source-fetcher",
+          "componentImportPath": "@plasmicapp/react-web/lib/data-sources"
+        }
+      ],
+      "customFunctions": []
+    }
+  ],
+  "globalVariants": {
+    "variantGroups": []
+  },
+  "wrapPagesWithGlobalContexts": true,
+  "preserveJsImportExtensions": false,
+  "cliVersion": "0.1.348",
+  "$schema": "https://unpkg.com/@plasmicapp/cli@0.1.348/dist/plasmic.schema.json"
+}
