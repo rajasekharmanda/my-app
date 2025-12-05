@@ -1,4 +1,4 @@
-# .github/workflows/plasmic.yml
+# Plasmic workflow v4
 name: Sync, build and deploy Plasmic app
 
 permissions:
@@ -16,24 +16,21 @@ jobs:
     steps:
       - id: checkout
         name: Checking out repository...
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
           fetch-depth: 0
-
       - id: node
-        name: Setting up Node v18...
-        uses: actions/setup-node@v4
+        name: Setting up node v18...
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
-
+          node-version: "18"
       - id: cache
         name: Recovering cache...
         uses: actions/cache@v4
         with:
           key: lock-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           path: ${{ github.event.client_payload.data.directory }}/node_modules
-
       - id: init
         name: Initializing Plasmic app...
         uses: rajasekharmanda/plasmic-action@main
@@ -49,33 +46,10 @@ jobs:
           scheme: ${{ github.event.client_payload.data.scheme }}
           title: ${{ github.event.client_payload.data.title }}
           description: ${{ github.event.client_payload.data.description }}
-
-        Optional: uncomment to capture all HTTP(S) via a local proxy
-      - name: Start tinyproxy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y tinyproxy
-          sudo sed -i 's/^Port .*/Port 8888/' /etc/tinyproxy/tinyproxy.conf
-          sudo sed -i 's/^Allow .*/# Allow/' /etc/tinyproxy/tinyproxy.conf
-          sudo systemctl restart tinyproxy
-
       - id: sync
         name: Syncing Plasmic project...
         if: ${{ github.event.client_payload.data.scheme == 'codegen' && steps.init.outputs.synced != 'true' }}
         uses: rajasekharmanda/plasmic-action@main
-        env:
-          # Wire-level HTTP logging
-          NODE_DEBUG: http,https
-
-          # Route through proxy if you enabled tinyproxy above
-          HTTP_PROXY: http://localhost:8888
-          HTTPS_PROXY: http://localhost:8888
-
-          # Self-hosted Plasmic base host (no /api suffix)
-          PLASMIC_HOST: https://ui-builder-dev.wescodevops.com
-          PLASMIC_API_HOST: https://ui-builder-dev.wescodevops.com
-          PLASMIC_AUTH_HOST: https://ui-builder-dev.wescodevops.com
-          PLASMIC_STUDIO_HOST: https://ui-builder-dev.wescodevops.com
         with:
           run: sync
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -86,12 +60,6 @@ jobs:
           sync_action: ${{ github.event.client_payload.data.syncAction }}
           title: ${{ github.event.client_payload.data.title }}
           description: ${{ github.event.client_payload.data.description }}
-
-      # Optional: print proxy logs if enabled
-      - name: Show proxy logs
-        run: |
-          sudo journalctl -u tinyproxy --no-pager | tail -n 300
-
       - id: build
         name: Building Plasmic app...
         if: ${{ github.event.client_payload.data.publish }}
